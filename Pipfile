@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 django = "==2.2.5"
+django-cleanup = "*"
 
 [requires]
 python_version = "3.6"

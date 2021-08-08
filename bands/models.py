@@ -7,8 +7,7 @@ class BandMember(core_models.TimeStampedModel):
     members = models.ManyToManyField(user_models.User)
 
     class Meta:
-        verbose_name = "Club Members"
-
+        verbose_name = "Band Member"
 
 class Band(core_models.TimeStampedModel):
     
@@ -17,16 +16,18 @@ class Band(core_models.TimeStampedModel):
     GROUPTYPE_SCHOOL = "학교행정"
     GROUPTYPE_COURSES = "과목"
     GROUPTYPE_CLUB = "동아리"
+    GROUPTYPE_OTHERS = "기타"
 
     GROUPTYPE_CHOICES = (
         (GROUPTYPE_SCHOOL, "학교행정"),
         (GROUPTYPE_COURSES, "과목"),
         (GROUPTYPE_CLUB, "동아리"),
+        (GROUPTYPE_CLUB, "기타"),
     )
 
     name = models.CharField(max_length=140)
     # is it official group or not
-    members = models.ForeignKey("ClubMember", on_delete=models.CASCADE)
+    members = models.ForeignKey("BandMember", on_delete=models.CASCADE)
     official = models.BooleanField(default=False)
     grouptype = models.CharField(choices=GROUPTYPE_CHOICES, max_length=20, null=True)
     definition = models.TextField(blank=True, null=True)
@@ -39,7 +40,6 @@ class Band(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
-
 
 """
 on delete options
