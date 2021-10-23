@@ -41,12 +41,16 @@ DJANGO_APPS = [
     'django_cleanup.apps.CleanupConfig',
 ]
 
+THIRD_PARTY_APPS = ["django_seed",]
+
 PROJECT_APPS = [
+    "core.apps.CoreConfig",
     "users.apps.UsersConfig",
     "posts.apps.PostsConfig",
     "comments.apps.CommentsConfig",
     "bands.apps.BandsConfig",
-    "conversations.apps.ConversationsConfig"
+    "conversations.apps.ConversationsConfig",
+    "lists.apps.ListsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
@@ -66,7 +70,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

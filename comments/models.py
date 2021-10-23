@@ -13,4 +13,4 @@ class Comment(core_models.TimeStampedModel):
     # 해당 스테이터스가 false일 경우 누군가로부터 신고가 들어왔다는 뜻이며, true인 댓글은 볼 수 있음
     
     def __str__(self):
-        return f"{self.comment} - {self.board}"
+        return f"{self.comment} - {self.post.title}"

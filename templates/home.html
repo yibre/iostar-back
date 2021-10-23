@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+    {% block page_name %}
+        Home
+    {% endblock page_name %}
+
+    {% block content %}
+    {% for post in posters %}
+        <p>poster title: {{post.title}}</p>
+        <p>author: {{post.author.nickname}}</p>
+        <p>poster content: {{post.content}}</p>
+    {% endfor %}
+
+    {% for notice in notices %}
+    <p>
+        notice notice: {{notice.title}}
+    </p>
+    {% endfor %}
+
+
+    {% if twinkles %}
+        {% for twinkle in twinkles %}
+        <p>
+            twinkle latest : {{twinkle.text}}
+        </p>
+        {% endfor %}
+    {% endif %}
+    
+{% endblock content %}

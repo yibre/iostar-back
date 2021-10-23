@@ -23,6 +23,7 @@ class Band(core_models.TimeStampedModel):
         (GROUPTYPE_COURSES, "과목"),
         (GROUPTYPE_CLUB, "동아리"),
         (GROUPTYPE_CLUB, "기타"),
+        ("IOSTAR OFFICIAL", "아이오스타 오피셜")
     )
 
     name = models.CharField(max_length=140)
