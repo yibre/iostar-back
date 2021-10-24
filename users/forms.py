@@ -6,26 +6,17 @@ class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-    def clean_email(self):
-        email=self.cleaned_data.get("email")
-        try:
-            models.User.objects.get(email=email)
-            return email
-        except models.User.DoesNotExist:
-            raise forms.ValidationError("User does not exist")
-
-    def clean_password(self): # clean method는 데터ㄹ return 해야함
+    def clean(self):
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
         try:
             user = models.User.objects.get(email=email)
-            if user.check_password(password): # 해당 함수가 유저의 password를 체크하는 함수임
-                return password
+            if user.check_password(password):
+                return self.cleaned_data
             else:
-                raise forms.ValidationError("Password is wrong")
+                self.add_error("password", forms.ValidationError("Password is wrong"))
         except models.User.DoesNotExist:
-            pass
-        # password를 확인하기 위해 가장 먼저 해야 할 일: 유저 확인하기
+            self.add_error("email", forms.ValidationError("User does not exist"))
 
 
 class SignUpForm(forms.Form):
