@@ -8,7 +8,7 @@ class CustomUserManager(BaseUserManager):
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
     """
-    def create_user(self, email, password, 
+    def create_user(self, email, password, schoolEmail, first_name, last_name, 
     **extra_fields):
         """
         Create and save a User with the given email and password.
@@ -16,7 +16,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(_('The Email must be set'))
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email, schoolEmail=schoolEmail, first_name=first_name, last_name=last_name, **extra_fields)
         user.set_password(password)
         user.save()
         return user
@@ -80,7 +80,7 @@ class User(AbstractUser):
 
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    schoolEmail = models.EmailField(_('email address 2nd'), unique=True, null=True)
+    schoolEmail = models.EmailField(_('school email adress'), unique=True, null=True)
     # second email: this is for second verified email if school email is expired.
 
     USERNAME_FIELD = 'email'
@@ -91,7 +91,7 @@ class User(AbstractUser):
     first_name=models.CharField(null=True, blank=True, max_length=30)
     last_name=models.CharField(null=True, blank=True, max_length=30)
     full_name=models.CharField(null=True, blank=True, max_length=30)
-    # full name is for korean users
+    # full name is for korean users, 우선은 생략하자, 한국인도 성이랑 이름 따로 쓸 수 있으니까
     nickname = models.CharField(max_length=15, null=True, blank=True)
     avatar = models.ImageField(null=True, blank=True)
     gender = models.CharField(
