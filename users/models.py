@@ -1,5 +1,6 @@
 import uuid
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import BaseUserManager
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -7,18 +8,17 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
 
-"""
+
 class CustomUserManager(BaseUserManager):
 
     # Custom user model manager where email is the unique identifiers
     # for authentication instead of usernames.
 
-    def create_user(self, email, password, schoolEmail, first_name, last_name, 
-    **extra_fields):
+    def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError(_('The Email must be set'))
         email = self.normalize_email(email)
-        user = self.model(email=email, schoolEmail=schoolEmail, first_name=first_name, last_name=last_name, **extra_fields)
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
         return user
@@ -34,7 +34,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
 
-"""
+
 
 class User(AbstractUser):
     """ custom user model """
@@ -78,11 +78,12 @@ class User(AbstractUser):
     LANGUAGE_CHOICES = ((LANGUAGE_ENGLISH, "English"), (LANGUAGE_KOREAN, "Korean"))
 
     username = None
-    email = models.EmailField(_('email address'), unique=True)
-    school_email = models.EmailField(_('school email adress'), unique=True, null=True)
+    # email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email adress'), unique=True, null=True)
+    email_2nd = models.EmailField(_('email address for second'), null=True, blank=True)
     # second email: this is for second verified email if school email is expired.
 
-    USERNAME_FIELD = 'school_email'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     first_name=models.CharField(null=True, blank=True, max_length=30)
@@ -105,29 +106,21 @@ class User(AbstractUser):
         choices=LANGUAGE_CHOICES, max_length=2, null=True, blank=True
     )
     email_verified = models.BooleanField(default=False)
-    school_email_verified = models.BooleanField(default=False)
+    email_2nd_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
 
     def verify_email(self):
-        if self.school_email_verified is False:
+        pass
+        if self.email_verified is False:
             secret = uuid.uuid4().hex[:20]
             self.email_secret = secret
-            html_message = render_to_string(
-                "emails/verify_email.html", {"secret": secret}
-            )
             send_mail(
                 "Verify Airbnb Account",
-                strip_tags(html_message),
+                f"Verify account, this is your secret: {secret}",
                 settings.EMAIL_FROM,
-                [self.school_email],
+                [self.email],
                 fail_silently=False,
-                html_message=html_message,
             )
-            # 현재 이메일 보내기 기능이 작동하지 않음. 원인을 알 수 없음
         return
-
-    
-    def __str__(self):
-        return self.school_email
 
 # 현재 16.2 verify email 하는 중

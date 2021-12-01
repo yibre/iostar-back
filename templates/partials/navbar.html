@@ -1,6 +1,6 @@
-<a href="{% url "core:home" %}">Nbnb</a>
+<a href="{% url "core:home" %}">IOSTAR</a>
 <ul>
-    
+    <li><a href="{% url 'posts:promotions' %}">Promotions</a></li>
     {% if user.is_authenticated %}
         <li><a href="{% url "users:logout" %}">Log out</a></li>
     {% else %}

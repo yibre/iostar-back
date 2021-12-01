@@ -7,6 +7,6 @@ from . import models
 class CustomUserAdmin(admin.ModelAdmin):
     """ Custom User Admin """
 
-    list_display = ("school_email", "gender", "school", "language", "student_id", "email_verified", "email_secret")
+    list_display = ("email", "gender", "school", "language", "student_id", "email_verified", "email_secret")
     list_filter = ("language", "school", "student_id")
-    search_fields = ('school_email', 'school',)
+    search_fields = ('email', 'school',)

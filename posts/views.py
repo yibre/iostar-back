@@ -1,12 +1,27 @@
 from django.shortcuts import render
 from . import models, forms
+from bands.models import Band
 from django.views.generic import ListView, DetailView, View, UpdateView, FormView
 
-# Create your views here.
+# Promotions
+
+class PromotionListView(ListView):
+    promotionBand = Band.objects.filter(name="promotions")
+    queryset = promotionBand[0].posts.order_by('created')
+    context_object_name = "posts"
+    template_name="posts/advertisements/main.html"
+
+
 def count_views(request, post_id):
-    post_object = Post.objects.get(id=post_id)
+    post_object = models.Post.objects.get(id=post_id)
     post_object.views = post_object.views +1
     post_object.save()
+
+def ad_delete(post_id):
+    pass
+
+def ad_edit(post_id):
+    pass
 
 
 class UploadAdView(FormView):
@@ -20,3 +35,16 @@ class UploadAdView(FormView):
         post.save()
         messages.success(self.request, "Advertisement Uploads")
         return redirect(reverse("posts:ad_detail", kwargs={"ads_pk": post.pk}))
+
+
+class PromotionDetail(DetailView):
+    pass
+
+class HobbyHome(ListView):
+    pass
+
+class SchoolLife(ListView):
+    pass
+
+class CareerHome(ListView):
+    pass

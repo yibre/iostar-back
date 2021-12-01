@@ -153,8 +153,34 @@ MEDIA_URL = "/media/"
 
 # email
 
+
+"""
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = "cdoyue@gmail.com"
+EMAIL_HOST_PASSWORD = "tuegtwrykhigbznu"
+EMAIL_USE_TLS = True
+EMAIL_FROM = "cdoyue@gmail.com"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+"""
+
+
+"""
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = "587"
 EMAIL_HOST_USER = "postmaster@sandboxd97c20e52be74977b077ab324398149b.mailgun.org"
 EMAIL_HOST_PASSWORD = "b5a40a10a007e41f80b31b39e8870102-30b9cd6d-1370a276"
 EMAIL_FROM = "baba@sandboxd97c20e52be74977b077ab324398149b.mailgun.org"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_TLS = True
+
+"""
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.hiworks.com'
+EMAIL_PORT = '465'
+EMAIL_HOST_USER = "master@iostar.site"
+EMAIL_HOST_PASSWORD = "iostarmaster2233"
+EMAIL_USE_SSL = True
+EMAIL_FROM = "master@iostar.site"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

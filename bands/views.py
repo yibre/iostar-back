@@ -18,3 +18,7 @@ class BandDetail(DetailView):
     """ RoomDetail Definition """
 
     model = models.Band
+
+class SchoolBandDetail(DetailView):
+    """  """
+    model = models.Band
