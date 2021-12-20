@@ -1,5 +1,6 @@
 from django.db import models
 from core import models as core_models
+from django.urls import reverse
 
 class Photo(core_models.TimeStampedModel):
 
@@ -27,6 +28,16 @@ class Post(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("posts:detail", kwargs={"pk": self.pk})
+
+    def get_photos(self):
+        try:
+            photo, = self.photos.all()[:1]
+            return photo.file.url
+        except ValueError:
+            return None
 
 
 class Twinkle(core_models.TimeStampedModel):

@@ -10,12 +10,20 @@ class UploadAdForm(forms.Form):
         fields = (
             "title",
             "contents",
-            "country",
+            "file",
         )
-
-    # band = Band.objects.filter(name="promotions") # 이게 먹힐지 잘 모르겠음
+    
     # author = models.users
 
     def save(self, *args, **kwargs):
         post = super().save(commit=False)
-        return post
+        band = Band.objects.get(name="promotions")
+        post.band = band
+        post.save()
+
+
+class PhotoForm(forms.ModelForm):
+    photo = forms.ImageField(label="Image")
+    class Meta:
+        model = models.Photo
+        fields = ('photo', )

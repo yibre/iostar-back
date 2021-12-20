@@ -48,12 +48,17 @@ class SignUpForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         user = super().save(commit=False)
         email = self.cleaned_data.get("email")
+        if "kaist" in email:
+            user.school = "kaist"
+        elif "dgist" in email:
+            user.school= "dgist"
+        elif "unist" in email:
+            user.school= "unist"
+        elif "gist" in email:
+            user.school= "gist"
+        elif "postech" in email:
+            user.school= "postech"
         password = self.cleaned_data.get("password")
         user.set_password(password)
         user.username = email
         user.save()
-
-    """
-    현 진행 상태: mail verification 기능 만드는 중
-    
-    """

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Upload Post
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+<h1>hello this is upload post site!</h1>
+<div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+        {% endif %}
+        {% for field in form %}
+        <div>
+            <div>{{field.label}}</div>
+            <div>{{field}}</div>
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <span>{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button>
+            {{cta}} upload
+        </button>
+    </form>
+
+</div>
+{% endblock content %}

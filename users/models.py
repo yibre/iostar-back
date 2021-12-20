@@ -96,7 +96,7 @@ class User(AbstractUser):
         choices=GENDER_CHOICES, max_length=10, null=True, blank=True
     )
     school = models.CharField(
-        choices=SCHOOL_CHOICES, max_length=10, null=True, blank=True
+        max_length=10, null=True, blank=True
     )
     stutus = models.CharField(
         choices=STATUS_CHOICES, max_length=15, null=True, blank=True
@@ -110,17 +110,21 @@ class User(AbstractUser):
     email_secret = models.CharField(max_length=20, default="", blank=True)
 
     def verify_email(self):
-        pass
         if self.email_verified is False:
             secret = uuid.uuid4().hex[:20]
             self.email_secret = secret
+            html_message = render_to_string(
+                "emails/verify_email.html", {"secret": secret}
+            )
             send_mail(
-                "Verify Airbnb Account",
-                f"Verify account, this is your secret: {secret}",
+                "IOSTAR 이메일 인증",
+                strip_tags(html_message),
                 settings.EMAIL_FROM,
                 [self.email],
                 fail_silently=False,
+                html_message=html_message,
             )
+            self.save()
         return
 
 # 현재 16.2 verify email 하는 중
