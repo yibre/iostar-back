@@ -14,7 +14,7 @@ class PromotionListView(ListView):
     queryset = promotionBand[0].posts.order_by('created')
     context_object_name = "posts"
     template_name="posts/promotions/main.html"
-
+    pass
 
 def count_views(request, post_id):
     post_object = models.Post.objects.get(id=post_id)
@@ -29,12 +29,13 @@ def ad_edit(post_id):
 
 
 class PromotionDetailView(DetailView):
-    """ Detail Definitions """
+    """ Detail Definitions     """
     promotionBand = Band.objects.filter(name="promotions")
     queryset = promotionBand[0].posts.order_by('created')
     context_object_name = "posts"
     template_name="posts/promotions/promotion_detail.html"
 
+    
 class UploadAdView(FormView):
     """ upload advertisements form """
     form_class = forms.UploadAdForm
@@ -59,14 +60,23 @@ class EditPostView(UpdateView):
         "file"
     }
 
+    def get_object(self, querset=None):
+        post = super().get_object(queryset=querset)
+        if post.author.pk != self.request.user.pk:
+            raise Http404()
+        return post
+
 class PromotionDetail(DetailView):
     pass
 
 class HobbyHome(ListView):
-    pass
+    HobbyBand = Band.objects.filter(name="promotions")
+    queryset = HobbyBand[0].posts.order_by('created')
+    context_object_name = "posts"
+    template_name = "posts/hobbies/main.html" 
 
 class SchoolLife(ListView):
-    pass
+    template_name = "post/hobbies/main.html"
 
 class CareerHome(ListView):
     pass

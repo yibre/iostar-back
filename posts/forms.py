@@ -1,16 +1,14 @@
 from django import forms
 from . import models
-from bands.models import models as Band
+from bands.models import Band
 
-class UploadAdForm(forms.Form):
+class UploadAdForm(forms.ModelForm):
     """ 홍보용 게시글을 등록하기 위한 사이트 """
-    # 아직 작업 다 안 끝남!!! class meta부터 전부 수정해야됨.
     class Meta:
         model = models.Post
         fields = (
             "title",
-            "contents",
-            "file",
+            "content",
         )
     
     # author = models.users

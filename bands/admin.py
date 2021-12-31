@@ -5,6 +5,10 @@ from . import models
 
 @admin.register(models.BandMember)
 class BandMemberAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "name",
+    )
     
     filter_horizontal = ("members",)
 

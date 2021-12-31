@@ -21,8 +21,7 @@ class Post(core_models.TimeStampedModel):
     author = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="posts")
     content = models.TextField(null=False)
     title = models.CharField(max_length=100, null=False)
-    modified_date = models.DateTimeField(auto_now=True)
-    # 마지막 수정일자
+    modified_date = models.DateTimeField(auto_now=True) # 마지막 수정일자
     heart = models.IntegerField(default=0) # 게시글에 좋아요 한 횟수
     views = models.IntegerField(default=0) # 게시글 조회수
 

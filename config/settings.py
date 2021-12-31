@@ -51,6 +51,7 @@ PROJECT_APPS = [
     "bands.apps.BandsConfig",
     "conversations.apps.ConversationsConfig",
     "lists.apps.ListsConfig",
+    "schoolposts.apps.SchoolpostsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS

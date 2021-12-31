@@ -1,6 +1,7 @@
 <ul>
     <li><a href="{% url 'posts:promotions' %}">Promotions</a></li>
     <li><a href="{% url 'posts:promotion_uploads'%}">Upload Promotions</a></li>
+    <li><a href="{% url 'posts:hobby'%}">hobby</a></li>
     {% if user.is_authenticated %}
         <li><a href="{% url "users:logout" %}">Log out</a></li>
     {% else %}
