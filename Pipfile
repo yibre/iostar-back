@@ -8,6 +8,7 @@ django = "==2.2.5"
 django-cleanup = "*"
 django-seed = "*"
 django-dotenv = "*"
+django-ckeditor = "*"
 
 [requires]
 python_version = "3.6"

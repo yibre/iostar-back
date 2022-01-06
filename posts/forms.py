@@ -15,9 +15,7 @@ class UploadAdForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         post = super().save(commit=False)
-        band = Band.objects.get(name="promotions")
-        post.band = band
-        post.save()
+        return post
 
 
 class PhotoForm(forms.ModelForm):

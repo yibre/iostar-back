@@ -39,9 +39,14 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 THIRD_PARTY_APPS = ["django_seed",]
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
 
 PROJECT_APPS = [
     "core.apps.CoreConfig",
@@ -151,6 +156,8 @@ AUTH_USER_MODEL = "users.User"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"
+
+# FILE_UPLOAD_MAX_MEMORY_SIZE ='2621440'
 
 # email
 

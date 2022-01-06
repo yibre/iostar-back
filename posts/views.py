@@ -30,9 +30,7 @@ def ad_edit(post_id):
 
 class PromotionDetailView(DetailView):
     """ Detail Definitions     """
-    promotionBand = Band.objects.filter(name="promotions")
-    queryset = promotionBand[0].posts.order_by('created')
-    context_object_name = "posts"
+    model = models.Post
     template_name="posts/promotions/promotion_detail.html"
 
     
@@ -43,12 +41,17 @@ class UploadAdView(FormView):
     # 내가 저장한 포스터가 promotion band에 저장되도록 만들어야함
 
     def form_valid(self, form):
+        print( "user is :",  self.request.user)
         post = form.save()
+        print("hello there")
+        print(self.request.user)
         post.author = self.request.user
+        band = Band.objects.get(name="promotions")
+        post.band = band
         post.save()
         form.save_m2m()
         messages.success(self.request, "Advertisement Uploads")
-        return redirect(reverse("posts:ad_detail", kwargs={"ads_pk": post.pk}))
+        return redirect(reverse("posts:promotion_detail", kwargs={"pk": post.pk}))
 
 
 class EditPostView(UpdateView):
@@ -65,9 +68,6 @@ class EditPostView(UpdateView):
         if post.author.pk != self.request.user.pk:
             raise Http404()
         return post
-
-class PromotionDetail(DetailView):
-    pass
 
 class HobbyHome(ListView):
     HobbyBand = Band.objects.filter(name="promotions")

@@ -22,6 +22,7 @@ Upload Post
         {% endif %}
         {% for field in form %}
         <div>
+            {{ form.media }}
             <div>{{field.label}}</div>
             <div>{{field}}</div>
             {% if field.errors %}

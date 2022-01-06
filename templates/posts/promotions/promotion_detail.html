@@ -16,8 +16,8 @@
         <div class="w-1/2">
             <div class="flex justify-between">
                 <div class="mb-5">
-                    <h4 class="text-3xl font-medium mb-px">{{room.name}}</h4>
-                    <span class="text-gray-700 font-light">{{room.city}}</span>
+                    <h4 class="text-3xl font-medium mb-px">{{post.author}}</h4>
+                    <span class="text-gray-700 font-light">this is post specific data</span>
                 </div>
                 <a href="{{post.author.get_absolute_url}}" class="flex flex-col items-center">
                     {% include "mixins/user_avatar.html" with user=room.host %}
@@ -25,11 +25,8 @@
                 </a>
             </div>
             <div class="flex border-section">
-                <span class="mr-5 font-light">{{room.room_type}}</span>
-                <span class="mr-5 font-light">{{room.beds}} bed{{room.beds|pluralize}}</span>
-                <span class="mr-5 font-light">{{room.bedrooms}} bedroom{{room.bedrooms|pluralize}}</span>
-                <span class="mr-5 font-light">{{room.baths}} bath{{room.baths|pluralize}}</span>
-                <span class="mr-5 font-light">{{room.guests}} guest{{room.guests|pluralize}}</span>
+                <span class="mr-5 font-light">{{post.title}}</span>
+                <span class="mr-5 font-light">{{post.content|safe}} </span>
             </div>
             <p class="border-section">
                 {{room.description}}

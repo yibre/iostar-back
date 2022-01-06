@@ -23,6 +23,7 @@ urlpatterns = [
     path("groups/", include("bands.urls", namespace="bands")),
     path("posts/", include("posts.urls", namespace="posts")),
     path("users/", include("users.urls", namespace="users")),
+    path("schoolposts/", include("schoolposts.urls", namespace="schoolposts")),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
