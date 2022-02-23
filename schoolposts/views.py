@@ -26,9 +26,13 @@ def post(request):
     
     
         if postForm.is_valid() and formset.is_valid():
+            print("form is valid 1")
+            print(postForm)
             post_form = postForm.save(commit=False)
             post_form.user = request.user
+            print("form is valid 2")
             post_form.save()
+            print("form is valid 3")
     
             for form in formset.cleaned_data:
                 #this helps to not crash if the user   

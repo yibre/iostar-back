@@ -5,6 +5,8 @@ from users import models as user_models
 
 from django.template.defaultfilters import slugify
 
+# 출처: https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
+
 class Post(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     title = models.CharField(max_length=128)

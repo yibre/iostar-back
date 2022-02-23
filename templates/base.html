@@ -1,15 +1,29 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <title>{% block page_name %}{% endblock page_name %}| IOSTAR</title>
   </head>
-  <body>
-    {% include "partials/header.html" %}
+  <body class="closed-menu">
     {% include "partials/navbar.html" %}
-    {% block content %}{% endblock %}
+    <div class="content-wrapper">
+      <div class="header">{% include "partials/header.html" %}</div>
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
     {% include "partials/footer.html" %}
   </body>
 </html>
+
+<!-- jquery 파일 다운로드받아서 여기서 추가하기, 통신하면 서버량이 너무 늘어날듯 -->

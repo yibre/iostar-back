@@ -1,18 +1,20 @@
+# from django import forms
+# from . import models
+# from bands.models import models as Band
 from django import forms
-from . import models
-from bands.models import models as Band
+from .models import Post, Images
 
-class PostForm(forms.Form):
-
+class PostForm(forms.ModelForm):
+    title = forms.CharField(max_length=128)
+    body = forms.CharField(max_length=245, label="Item Description.")
+ 
     class Meta:
-        model = models.Post
-        
-    def save(self, *args, **kwargs):
-        post =  super().save(commit=False)
-
-
+        model = Post
+        fields = ('title', 'body', )
+ 
+ 
 class ImageForm(forms.ModelForm):
     image = forms.ImageField(label='Image')    
     class Meta:
-        model = models.Images
+        model = Images
         fields = ('image', )

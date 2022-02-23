@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{%  static  'css/masonry_list.css'  %}">
+<div class="masonry">
+  {% for post in posts %}
+    <div class ="item">{% include 'mixins/posts/post_card.html' with post=post %}</div>
+  {% endfor %}
+  </div>
+<script src="{% static 'jsfiles/mansory.js' %}"></script>
+{% endblock %}
+
+
+<!--
+
+참고한 자료:
+ui를 masonry library를 이용하여 
+https://tympanus.net/codrops/2013/07/02/loading-effects-for-grid-items-with-css-animations/
+이게 안된다면 이걸로 시도해볼것
+https://codepen.io/charlotteosborne/pen/dyZGJzg
+
+https://codepen.io/javiluli_dev/pen/WNZyjqd 이것도 괜찮군
+
+
+-->

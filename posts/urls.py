@@ -9,7 +9,9 @@ urlpatterns = [
     path("promotions/uploads/", views.UploadAdView.as_view(), name="promotion_uploads"),
     path("promotions/<int:pk>/delete/", views.ad_delete, name="promotion_delete"),
     path("promotions/<int:pk>/edit/", views.EditPostView.as_view(), name="edit"),
+    path("search/", views.SearchView.as_view(), name="search"),
     path("hobby/", views.HobbyHome.as_view(), name= "hobby"),
     path("life/", views.SchoolLife.as_view(), name="school"),
     path("career/", views.CareerHome.as_view(), name="career"),
+    path("iostar/notice/", views.NoticeView.as_view(), name="iostar-notice"),
 ]

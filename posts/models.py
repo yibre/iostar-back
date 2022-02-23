@@ -9,7 +9,7 @@ class Photo(core_models.TimeStampedModel):
 
     caption = models.CharField(max_length=80)
     file = models.ImageField()
-    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    post = models.ForeignKey("Post", related_name = "photos", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.caption
@@ -33,7 +33,7 @@ class Post(core_models.TimeStampedModel):
     def get_absolute_url(self):
         return reverse("posts:detail", kwargs={"pk": self.pk})
 
-    def get_photos(self):
+    def first_photo(self):
         try:
             photo, = self.photos.all()[:1]
             return photo.file.url

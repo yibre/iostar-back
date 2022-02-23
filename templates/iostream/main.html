@@ -1,0 +1,45 @@
+<!-- iostream main page!! 
+https://www.geeksforgeeks.org/create-view-function-based-views-django/
+-->
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel= "stylesheet" href = "{% static 'css/iostream/main.css' %}">
+{% if user.is_authenticated %}
+    user is authenasdf~!
+    <!-- {% include "iostream/upload_iostream.html" %} -->
+    <form method="POST" action="{% url 'iostream:upload' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+        {% endif %}
+        {% for field in form %}
+        <div>
+            {{ form.media }}
+            <div>{{field.label}}</div>
+            <div>{{field}}</div>
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <span>{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" value="Submit">
+            {{cta}} upload
+        </button>
+{% else %}
+    user is not authen~~!
+{% endif %}
+
+<p></p>
+{% for star in iostream %}
+    <p>twinkle author: {{star.author}}</p>
+    <p>content: {{star.text}}</p>
+{% endfor %}
+
+{% endblock %}

@@ -6,7 +6,7 @@
 
     {% block content %}
     {% for post in posters %}
-        <p>poster title: {{post.title}}</p>
+        <a href = "{% url 'posts:promotion_detail' post.pk %}"><p>poster title: {{post.title}}</p>
         <p>author: {{post.author.nickname}}</p>
         <p>poster content: {{post.content}}</p>
     {% endfor %}

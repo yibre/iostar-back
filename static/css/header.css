@@ -1,0 +1,27 @@
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+ul {
+    list-style-type: none;
+}
+
+header > div {
+    margin-left: 10px;
+}
+
+img {
+    width: 35vmin;
+    height: 10vmin;
+}
+
+.search-box {
+    background-color:#333333;
+    border: 5px;
+    height: 10vmin;
+    width: 40vmin;
+    font-family: 'Courier New', Courier, monospace;
+
+}

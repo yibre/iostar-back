@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+from django.shortcuts import reverse
 from django.template.loader import render_to_string
 
 
@@ -112,6 +113,9 @@ class User(AbstractUser):
     email_secret = models.CharField(max_length=20, default="", blank=True)
 
     objects = CustomUserManager()
+
+    def get_absolute_url(self):
+        return reverse("users:profile", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.email

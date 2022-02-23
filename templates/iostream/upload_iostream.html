@@ -1,0 +1,35 @@
+{% block page_title %}
+Upload iostream
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+This is upload iostream page!
+<form method="POST" action="{% url 'iostream:upload' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <span>{{error}}</span>
+    {% endfor %}
+    {% endif %}
+    {% for field in form %}
+    <div>
+        {{ form.media }}
+        <div>{{field.label}}</div>
+        <div>{{field}}</div>
+        {% if field.errors %}
+        {% for error in field.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+    <button>
+        {{cta}} upload
+    </button>
+
+{% endblock content %}

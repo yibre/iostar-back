@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # from users import mixins as user_mixins
-from django.views.generic import ListView, DetailView, UpdateView, FormView
+from django.views.generic import ListView, DetailView, UpdateView, FormView, View
 
 # Promotions
 
@@ -14,7 +14,6 @@ class PromotionListView(ListView):
     queryset = promotionBand[0].posts.order_by('created')
     context_object_name = "posts"
     template_name="posts/promotions/main.html"
-    pass
 
 def count_views(request, post_id):
     post_object = models.Post.objects.get(id=post_id)
@@ -33,7 +32,15 @@ class PromotionDetailView(DetailView):
     model = models.Post
     template_name="posts/promotions/promotion_detail.html"
 
-    
+
+class NoticeView(ListView):
+    """ iostar notice """
+    promotionBand = Band.objects.filter(name="promotions")
+    queryset = promotionBand[0].posts.order_by('created')
+    context_object_name = "posts"
+    template_name="posts/promotions/masonry_list.html"
+
+
 class UploadAdView(FormView):
     """ upload advertisements form """
     form_class = forms.UploadAdForm
@@ -41,10 +48,7 @@ class UploadAdView(FormView):
     # 내가 저장한 포스터가 promotion band에 저장되도록 만들어야함
 
     def form_valid(self, form):
-        print( "user is :",  self.request.user)
         post = form.save()
-        print("hello there")
-        print(self.request.user)
         post.author = self.request.user
         band = Band.objects.get(name="promotions")
         post.band = band
@@ -79,4 +83,9 @@ class SchoolLife(ListView):
     template_name = "post/hobbies/main.html"
 
 class CareerHome(ListView):
+    pass
+
+
+class SearchView(View):
+    """ SearchView Definition """
     pass
