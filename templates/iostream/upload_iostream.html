@@ -1,13 +1,7 @@
-{% block page_title %}
-Upload iostream
-{% endblock page_title %}
 
-{% block search-bar %}
-{% endblock search-bar %}
 
-{% block content %}
+This is upload iostream page! from upload_iostream.html
 
-This is upload iostream page!
 <form method="POST" action="{% url 'iostream:upload' %}" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -31,5 +25,3 @@ This is upload iostream page!
     <button>
         {{cta}} upload
     </button>
-
-{% endblock content %}
