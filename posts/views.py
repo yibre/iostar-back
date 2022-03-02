@@ -20,18 +20,31 @@ def count_views(request, post_id):
     post_object.views = post_object.views +1
     post_object.save()
 
-def ad_delete(post_id):
-    pass
+
+def ad_delete(request, pk):
+    try:
+        post = models.Post.objects.get(pk=pk)
+        post.delete()
+        messages.success(request, "post deleted")
+        return redirect(reverse("core:home"))
+    except models.Post.DoesNotExist:
+        return redirect(reverse("core:home"))
 
 def ad_edit(post_id):
     pass
 
 
+
 class PromotionDetailView(DetailView):
-    """ Detail Definitions     """
+    """ Detail Definitions """
     model = models.Post
     template_name="posts/promotions/promotion_detail.html"
 
+
+class NoticeDetailView(DetailView):
+    """ Detail Definitions """
+    model = models.Post
+    template_name="posts/promotions/promotion_detail.html"
 
 class NoticeView(ListView):
     """ iostar notice """
