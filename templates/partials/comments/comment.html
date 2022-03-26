@@ -1,1 +1,17 @@
-<h2>This slot is for comments</h2>
+<h2>This slot comes form comment.html </h2>
+
+<form method="POST" class="w-full" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <span class="text-red-700 font-medium text-sm">{{error}}</span> 
+        {% endfor %}
+    {% endif %}
+
+    {% for field in form %}
+        {% include 'mixins/posts/post_input.html' with field=field %}
+    {% endfor %}
+
+    <button class="btn bg-red-500 text-white">{{cta}}</button>
+</form> 

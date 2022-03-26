@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from . import models, forms
 from bands.models import Band
-from django.shortcuts import render, redirect, reverse
-from django.contrib.auth.decorators import login_required
+from comments.models import Comment
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 # from users import mixins as user_mixins
 from django.views.generic import ListView, DetailView, UpdateView, FormView, View
+from comments.forms import CommentForm
+from django.urls import reverse_lazy
 
 # Promotions
 
@@ -21,7 +24,7 @@ def count_views(request, post_id):
     post_object.save()
 
 
-def ad_delete(request, pk):
+def post_delete(request, pk):
     try:
         post = models.Post.objects.get(pk=pk)
         post.delete()
@@ -35,10 +38,56 @@ def ad_edit(post_id):
 
 
 
+
 class PromotionDetailView(DetailView):
     """ Detail Definitions """
     model = models.Post
     template_name="posts/promotions/promotion_detail.html"
+
+    # 이 하단부 코드는
+    # https://dontrepeatyourself.org/post/django-blog-tutorial-part-4-posts-and-comments/
+    # 현재 코멘트 업로드 안되는 상황, 물론 잘 보여지긴 함
+    # 에서 가져옴
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs["pk"]
+        # slug = self.kwargs["slug"]
+
+        form = CommentForm()
+        post = get_object_or_404(models.Post, pk=pk)
+        # post = get_object_or_404(models.Post, pk=pk, slug=slug)
+        comments = post.comment_set.all()
+
+        context['post'] = post
+        context['comments'] = comments
+        context['form'] = form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+        self.object = self.get_object()
+        context = super().get_context_data(**kwargs)
+
+        post = models.Post.objects.filter(id=self.kwargs['pk'])[0]
+        comment = post.comment_set.all()
+
+        context['post'] = post
+        context['comment'] = comment
+        context['form'] = form
+
+        if form.is_valid():
+            print("form is valid")
+            writer = self.request.user
+            comment = form.cleaned_data['comment']
+
+            comment = Comment.objects.create(
+                comment=comment, post=post, writer = writer
+            )
+            form = CommentForm()
+            context['form'] = form
+        # 해당 줄 부분 수정이 있음
+        return redirect(reverse("posts:promotion_detail", kwargs={"pk": post.pk}))
 
 
 class NoticeDetailView(DetailView):
@@ -69,7 +118,6 @@ class UploadAdView(FormView):
         form.save_m2m()
         messages.success(self.request, "Advertisement Uploads")
         return redirect(reverse("posts:promotion_detail", kwargs={"pk": post.pk}))
-
 
 class EditPostView(UpdateView):
     model = models.Post

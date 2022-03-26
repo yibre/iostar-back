@@ -18,6 +18,7 @@ class UploadAdForm(forms.ModelForm):
         return post
 
 
+
 class PhotoForm(forms.ModelForm):
     photo = forms.ImageField(label="Image")
     class Meta:
