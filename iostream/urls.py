@@ -9,3 +9,4 @@ urlpatterns = [
     path("include/", views.UploadIostreamView.as_view(), name="upload"),
     # Todo: delete 기능 추가하기! edit 기능은 만들지 말기
 ]
+

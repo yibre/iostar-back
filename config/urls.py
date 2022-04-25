@@ -18,17 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-# for ckeditor userside uploading
-# reference: https://stackoverflow.com/questions/54826503/django-ckeditor-image-upload
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import never_cache
-from ckeditor_uploader import views as ckeditor_views
-
 urlpatterns = [
-    # path("ckeditor5/", include('django_ckeditor_5.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('ckeditor/upload/', login_required(ckeditor_views.upload), name='ckeditor_upload'),
-    path('ckeditor/browse/', never_cache(login_required(ckeditor_views.browse)), name='ckeditor_browse'),
     path("", include("core.urls", namespace="core")),
     path("groups/", include("bands.urls", namespace="bands")),
     path("posts/", include("posts.urls", namespace="posts")),

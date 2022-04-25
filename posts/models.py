@@ -1,22 +1,19 @@
 from django.db import models
 from core import models as core_models
 from django.urls import reverse
-# from ckeditor.fields import RichTextFormField, RichTextField
+from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
-# from django_ckeditor_5.fields import CKEditor5Field
-import os
 
 class Photo(core_models.TimeStampedModel):
 
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField(upload_to='featured_image/%Y/%m/%d/')
+    file = models.ImageField()
     post = models.ForeignKey("Post", related_name = "photos", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.caption
-
 # 여러가지 photo가 하나의 게시글에 연관지어질 수 있음.
 
 class Post(core_models.TimeStampedModel):
@@ -26,6 +23,7 @@ class Post(core_models.TimeStampedModel):
     author = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="posts")
     content = RichTextUploadingField(blank=True, null=True)
     # content = CKEditor5Field('Content', config_name= 'extends', blank=True, null=True)
+    #content = models.TextField(null=False)
     title = models.CharField(max_length=100, null=False)
     modified_date = models.DateTimeField(auto_now=True) # 마지막 수정일자
     heart = models.IntegerField(default=0) # 게시글에 좋아요 한 횟수
@@ -69,7 +67,6 @@ class Notice(Post):
         except ValueError:
             return None
         
-
 
 class Twinkle(core_models.TimeStampedModel):
     author = models.ForeignKey("users.User", on_delete=models.CASCADE)

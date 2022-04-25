@@ -14,6 +14,3 @@ class Comment(core_models.TimeStampedModel):
     
     def __str__(self):
         return f"{self.comment} - {self.post.title}"
-
-    class Meta:
-        ordering = ('-created',)

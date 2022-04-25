@@ -41,7 +41,6 @@ DJANGO_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'ckeditor',
     'ckeditor_uploader',
-    #'django_ckeditor_5',
     'tailwind',
 ]
 
@@ -194,7 +193,6 @@ EMAIL_HOST_PASSWORD = "iostarmaster2233"
 EMAIL_USE_SSL = True
 EMAIL_FROM = "master@iostar.site"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 
 # CKeditor5 custom option setting
 customColorPalette = [
