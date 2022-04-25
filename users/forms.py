@@ -4,8 +4,17 @@ from django.shortcuts import render
 from . import models
 
 class LoginForm(forms.Form):
+    required_css_class = 'required-field'
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        # 폼 안에 class를 만들어주는 역할
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['placeholder'] = 'email@example.com'
+        self.fields['password'].widget.attrs['placeholder'] = 'password'
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
     def clean(self):
         email = self.cleaned_data.get("email")
@@ -62,3 +71,12 @@ class SignUpForm(forms.ModelForm):
         user.set_password(password)
         user.username = email
         user.save()
+
+    def __init__(self, *args, **kwargs):
+        # 폼 안에 class를 만들어주는 역할
+        super(SignUpForm, self).__init__(*args, **kwargs)
+        self.fields['email_2nd'].widget.attrs['placeholder'] = 'email@example.com'
+        self.fields['password'].widget.attrs['placeholder'] = 'password'
+        self.fields['password1'].widget.attrs['placeholder'] = 'repeat password '
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'

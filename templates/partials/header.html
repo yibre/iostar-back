@@ -1,21 +1,23 @@
 {% load static %}
 <link rel="stylesheet" href = "{% static 'css/header.css' %}">
-<header>
+<header class="header-options">
     <div class = "header-searchbar">
     {% block search-bar %}
         <form method="get" action="{% url 'posts:search' %}" class="w-9/12">
-            <input class="search-box" name="city" placeholder="Search By City" />
+            <input class="search-box" name="city" placeholder="Search" />
         </form>
     {% endblock search-bar %}
     </div>
-    <div class = "header-logo"><a href="{% url 'core:home' %}"><img class="logo-picture" src="../../static/images/iostar_vertical.png"></a></div>
+    <div class = "header-logo"><a href="{% url 'core:home' %}"><img class="logo-picture" src= "{% static '/images/iostar_vertical.png' %}"></a></div>
     <section class = "header-menu">
         <ul>
         {% if user.is_authenticated %}
-            <li class= "header-logout"><a href="{% url 'users:logout' %}">Log out</a></li>
+            <li class= "header-button header-logout"><a href="{% url 'users:logout' %}">Log out</a></li>
         {% else %}
-            <li class = "header-login"><a href= "{% url 'users:login' %}">Login</a></li>
-            <li class = "header-signin"><a href = "{% url 'users:signup' %}">Sign In</a></li>    
+            <div class="header-authentificated">
+                <li class = "header-button header-login"><a href= "{% url 'users:login' %}">Login</a></li>
+                <li class = "header-button header-signin"><a href = "{% url 'users:signup' %}">Sign In</a></li>
+            </div>
         {% endif %}
         </ul>
     </section>

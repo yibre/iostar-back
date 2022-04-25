@@ -20,6 +20,11 @@ class PhotoAdmin(admin.ModelAdmin):
 
     get_thumbnail.short_description = "Thumbnail"
 
+@admin.register(models.Notice)
+class NoticeAdmin(admin.ModelAdmin):
+    list_display = ("title", "get_thumbnails")
+    search_fields = ('title',)
+
 
 @admin.register(models.Twinkle)
 class TwinkleAdmin(admin.ModelAdmin):

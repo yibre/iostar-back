@@ -41,13 +41,13 @@ DJANGO_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'ckeditor',
     'ckeditor_uploader',
-    'django_ckeditor_5',
+    #'django_ckeditor_5',
     'tailwind',
 ]
 
 THIRD_PARTY_APPS = ["django_seed",]
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_UPLOAD_PATH = 'uploads/featured_image/%Y/%m/%d/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 PROJECT_APPS = [
@@ -226,17 +226,17 @@ customColorPalette = [
 
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
-                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'imageUpload',
+                    'bulletedList', 'numberedList', 'blockQuote', ],
 
     },
     'extends': {
         'blockToolbar': [
             'paragraph', 'heading1', 'heading2', 'heading3',
             '|',
-            'bulletedList', 'numberedList',
+            'blockQuote', 'imageUpload',
             '|',
-            'blockQuote', 'imageUpload'
+            'bulletedList', 'numberedList',
         ],
         'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
         'code','subscript', 'superscript', 'highlight', '|', 'codeBlock',

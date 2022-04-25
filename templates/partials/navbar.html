@@ -1,24 +1,5 @@
 {% load static %}
 <link rel="stylesheet" href="{%  static  'css/navbar.css'  %}">
-<!--
-<nav class = "vetical-menu-wrapper">
-    <div class="vertical-menu-logo">
-        <div>LOGO</div>
-        <span class="open-menu-btn"><hr><hr><hr></span>
-    </div>
-    <a href="{% url 'posts:promotions' %}" class="menu__item">Promotions</a>
-    <a href="{% url 'posts:promotion_uploads'%}" class="menu__item">Upload Promotions</a>
-    <a href="{% url 'posts:hobby'%}" class="menu__item">hobby</a>
-    {% if user.is_authenticated %}
-        <a href="{{user.get_absolute_url}}" class="menu__item">Profile</a>
-        <a href="{% url "users:logout" %}" class="menu__item">Log out</a>
-    {% else %}
-        <a href="{% url "users:login" %}" class="menu__item">Log in</a>
-        <a href="{% url "users:signup" %}" class="menu__item">Sign up</a>
-    {% endif %}
-    <div class = "text-pink-500">hi there</div>
-</nav>
--->
 
 <nav class="vertical-menu-wrapper closed-menu">
   <div class="vertical-menu-logo">

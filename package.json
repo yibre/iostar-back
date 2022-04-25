@@ -1,5 +1,5 @@
 {
-  "name": "airbnb-clone",
+  "name": "iostar",
   "version": "1.0.0",
   "description": "Cloning Airbnb with Python, Django, Tailwind and more... 🇰🇷💖🐍",
   "repository": {
@@ -7,6 +7,7 @@
     "url": "git+https://github.com/nomadcoders/airbnb-clone.git"
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "css": "gulp"
   },
   "homepage": "https://github.com/nomadcoders/airbnb-clone#readme",
@@ -15,14 +16,23 @@
     "gulp": "^4.0.2",
     "gulp-csso": "^3.0.1",
     "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^4.0.2",
-    "node-sass": "^4.13.0",
-    "tailwindcss": "^1.9.6"
+    "gulp-sass": "^5.1.0",
+    "node-sass": "^7.0.1",
+    "tailwindcss": "^3.0.24"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.9"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.3"
   },
   "bugs": {
     "url": "https://github.com/nomadcoders/airbnb-clone/issues"
   },
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "sass": "^1.50.0"
+  }
 }

@@ -23,7 +23,6 @@ class Images(models.Model):
     image = models.ImageField(upload_to=get_image_filename,
                               verbose_name='Image')
 
-
 class KaistPost(post_models.Post):
     # members = user_models.objects.get(school="KAIST")
     pass

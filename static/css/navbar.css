@@ -7,11 +7,12 @@ nav {
   display: block;
   min-height: 300px;
   height: 100%;
-  color: #fff;
+  color: #ccc;
   opacity: 0.8;
   transition: all 300ms;
   -moz-transition: all 300ms;
   -webkit-transition: all 300ms;
+  z-index: 10;
 }
 nav .vertical-menu {
   overflow-x: hidden;
@@ -37,6 +38,12 @@ nav li#user-info > span:after{
   margin: auto;
   border-radius: 50%;
 }
+
+.closed-menu .content-wrapper{
+  width: 100%;
+  left: 50px;
+}
+
 .content-wrapper{
   width: calc(100% - 240px);
   height: 100%;
@@ -44,11 +51,9 @@ nav li#user-info > span:after{
   background: #fff;
   left: 240px;
   padding: 20px;
+  z-index: 0;
 }
-.closed-menu .content-wrapper{
-  width: 100%;
-  left: 50px;
-}
+
 .content-wrapper{
     transition: all 300ms;
 }
@@ -64,11 +69,10 @@ nav li#user-info > span:after{
 
 .closed-menu .vertical-menu-wrapper ul,.closed-menu .vertical-menu-wrapper hr{margin-left: -300px;}
 .vertical-menu-wrapper ul, .vertical-menu-wrapper hr{transition: all 100ms;}
-.content-wrapper{background: #ebebeb;}
+/* .content-wrapper{background: #ebebeb;} */
 .content{
-  width: 90%;
-  min-height: 90%;
-  background: #fff;
-  border-radius: 10px;
-  padding: 30px;
+  width: 98%;
+  min-height: 100%;
+  border-radius: 20px;
+  padding: 10px;
 }
