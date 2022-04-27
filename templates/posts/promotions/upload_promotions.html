@@ -6,27 +6,24 @@
 
 {% block content %}
 {% load static %}
-<h1>hello this is upload post site!!!</h1>
-<div class="overflow-y-auto overflow-x-hidden w-3/5 m-auto bg-lime-100 h-full">
-
-    <form method="POST" enctype="multipart/form-data" action="">
+<div class="overflow-y-visible overflow-x-visible w-5/6 m-auto bg-lime-100 h-full">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         {{ form.media }}
-        {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-                <span>{{error}}</span>
-            {% endfor %}
-        {% endif %}
-        <!--{% csrf_token %}
-        
-        ckeditor 폼을 프론트엔드에서도 그대로 유지하기 위한 방법: 이거 7분 16초경 참고
-            https://www.youtube.com/watch?v=4DIcO1XZefg
-
-        -->
         <button>
             {{cta}} upload
         </button>
     </form>
 </div>
 {% endblock content %}
+
+<!-- 
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <span>{{error}}</span>
+            {% endfor %}
+        {% endif %}
+    ckeditor 폼을 프론트엔드에서도 그대로 유지하기 위한 방법: 이거 7분 16초경 참고
+            https://www.youtube.com/watch?v=4DIcO1XZefg
+-->

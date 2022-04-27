@@ -41,7 +41,7 @@ DJANGO_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'ckeditor',
     'ckeditor_uploader',
-    #'django_ckeditor_5',
+    'django_ckeditor_5',
     'tailwind',
 ]
 
@@ -156,7 +156,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "users.User"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
-
 MEDIA_URL = "/media/"
 
 # FILE_UPLOAD_MAX_MEMORY_SIZE ='2621440'

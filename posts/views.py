@@ -37,6 +37,10 @@ def ad_edit(post_id):
     pass
 
 
+class AddPhotoView(FormView):
+    model = models.Photo
+    template_name = "posts/add_photo.html"
+    # 아직 미완성
 
 
 class PromotionDetailView(DetailView):
