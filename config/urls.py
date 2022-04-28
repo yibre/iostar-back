@@ -27,6 +27,7 @@ urlpatterns = [
     path("schoolposts/", include("schoolposts.urls", namespace="schoolposts")),
     path('iostream/', include("iostream.urls", namespace = "iostream")),
     path('admin/', admin.site.urls),
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

@@ -7,11 +7,12 @@
 {% block content %}
 {% load static %}
 <h1>hello this is upload post site!!!</h1>
-<div class="overflow-y-auto overflow-x-hidden w-3/5 m-auto bg-lime-100 h-full">
+<div class="overflow-y-auto overflow-x-hidden w-full m-auto bg-lime-100 h-full">
 
     <form method="POST" enctype="multipart/form-data" action="">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.title }}
+        {{ form.content }}
         {{ form.media }}
         {% if form.non_field_errors %}
             {% for error in form.non_field_errors %}

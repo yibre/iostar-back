@@ -1,5 +1,10 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls import include
+from django.conf.urls.static import static
+from django.contrib import messages
+from django.shortcuts import redirect
 
 app_name = "posts"
 
@@ -16,3 +21,9 @@ urlpatterns = [
     path("notice/", views.NoticeView.as_view(), name="iostar-notice"),
     path("notice/<int:pk>", views.NoticeDetailView.as_view(), name="notice_detail"),
 ]
+
+def protected_file(request, path, document_root=None):
+    # 파일 경로를 통ㅐ 파일에 직접 접근하지 못하게 막는 코드
+    # 출처: https://parkhyeonchae.github.io/2020/04/13/django-project-25/
+    messages.error(request, "접근 불가")
+    return redirect('/')

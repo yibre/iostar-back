@@ -2,6 +2,7 @@ from django.db import models
 from core import models as core_models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from ckeditor_uploader.fields import RichTextUploadingField
 
 class Photo(core_models.TimeStampedModel):

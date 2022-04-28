@@ -41,13 +41,15 @@ DJANGO_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'django_ckeditor_5',
     'tailwind',
 ]
 
 THIRD_PARTY_APPS = ["django_seed",]
 
-CKEDITOR_UPLOAD_PATH = 'uploads/featured_image/%Y/%m/%d/'
+CKEDITOR_UPLOAD_PATH = 'uploads/featured_image/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 
 PROJECT_APPS = [
     "core.apps.CoreConfig",

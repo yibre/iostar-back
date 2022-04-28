@@ -7,6 +7,7 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 
 class UploadAdForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorUploadingWidget())
+    # content = forms.CharField(widget=CKEditor5Widget())
     """ 홍보용 게시글을 등록하기 위한 사이트 """
     class Meta:
         model = models.Post
