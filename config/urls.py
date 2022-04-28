@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path("", include("core.urls", namespace="core")),
     path("groups/", include("bands.urls", namespace="bands")),
     path("posts/", include("posts.urls", namespace="posts")),
