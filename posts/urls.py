@@ -5,7 +5,7 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import messages
 from django.shortcuts import redirect
-
+from django.contrib.auth.decorators import login_required
 
 
 app_name = "posts"

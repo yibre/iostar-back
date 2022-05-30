@@ -8,6 +8,15 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.shortcuts import reverse
 from django.template.loader import render_to_string
+# 아바타를 가져오기 위한 코드
+from urllib.request import urlopen
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+from django.contrib.staticfiles.templatetags.staticfiles import static
+# -*- coding: utf-8 -*-
+from svglib.svglib import svg2rlg
+from reportlab.graphics import renderPM
+
 
 
 class CustomUserManager(BaseUserManager):
@@ -94,7 +103,7 @@ class User(AbstractUser):
     full_name=models.CharField(null=True, blank=True, max_length=30)
     # full name is for korean users, 우선은 생략하자, 한국인도 성이랑 이름 따로 쓸 수 있으니까
     nickname = models.CharField(max_length=15, null=True, blank=True)
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(null=True, blank=True, upload_to = "user_profiles/")
     gender = models.CharField(
         choices=GENDER_CHOICES, max_length=10, null=True, blank=True
     )
@@ -111,19 +120,47 @@ class User(AbstractUser):
     email_verified = models.BooleanField(default=False)
     email_2nd_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
-
     objects = CustomUserManager()
 
     def get_absolute_url(self):
         return reverse("users:profile", kwargs={"pk": self.pk})
 
+    def get_profile(self):
+        if self.avatar:
+            return self.avatar.url
+        else: 
+            return static('images/anonymous-person-icon-18.jpeg')
+
     def __str__(self):
         return self.email
+
+    def make_avatar(self):
+        # api 를 이용해 랜덤 아바타 만들기, 현 미완성
+        #h ttps://stackoverflow.com/questions/64263748/how-download-image-from-url-to-django
+        # 해당 코드를 보고 발견함
+        api = "https://avatars.dicebear.com/api/identicon/"
+        api_ask = api+self.email_secret+".svg"
+        # svg 코드를 다운받게 됨
+        img_tmp = NamedTemporaryFile(delete=True)
+        with urlopen(api_ask) as uo:
+           assert uo.status == 200
+           img_tmp.write(uo.read())
+           img_tmp.flush()
+        img = File(img_tmp)
+        #svg 파일을 png 파일로 수정하기
+        # svg2png(bytestring=svg_code, write_to='output.png')
+        self.avatar.save(str(self.pk)+".svg", img) # 여기서는 svg 파일로 save하게 됨
+
+        
+
+    def is_verified(self):
+        return self.email_verified
 
     def verify_email(self):
         if self.email_verified is False:
             secret = uuid.uuid4().hex[:20]
             self.email_secret = secret
+            self.make_avatar()
             html_message = render_to_string(
                 "emails/verify_email.html", {"secret": secret}
             )
@@ -137,5 +174,3 @@ class User(AbstractUser):
             )
             self.save()
         return
-
-# 현재 16.2 verify email 하는 중

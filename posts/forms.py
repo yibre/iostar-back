@@ -2,12 +2,13 @@ from django import forms
 from . import models
 from bands.models import Band
 from ckeditor.widgets import CKEditorWidget
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django_ckeditor_5.widgets import CKEditor5Widget
 
 
 class UploadAdForm(forms.ModelForm):
     """ 홍보용 게시글을 등록하기 위한 사이트 """
-    # content = forms.CharField(widget=CKEditorUploadingWidget())
+    content = forms.CharField(widget=CKEditorUploadingWidget())
     class Meta:
         model = models.Post
         fields = (

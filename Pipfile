@@ -11,6 +11,8 @@ django-dotenv = "*"
 django-ckeditor = "*"
 gulp = "*"
 django-ckeditor-5 = "*"
+dicebear = "*"
+svglib = "*"
 
 [requires]
 python_version = "3.6"

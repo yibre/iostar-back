@@ -40,6 +40,7 @@ class SignUpForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
+        return email
         for maillist in ["kaist.ac.kr", "dgist.ac.kr", "unist.ac.kr", "gist.ac.kr"]:
             if maillist in email:
                 return email

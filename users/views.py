@@ -1,4 +1,4 @@
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
@@ -36,13 +36,23 @@ class SignUpView(FormView):
 
 
 class UserProfileView(DetailView):
-
     model = models.User
     context_object_name = "user_obj"
+    template_name = "users/user_detail.html"
 
-class EditProfileView(FormView):
-    """ to edit my profile """
-    pass
+class UpdateProfileView(UpdateView):
+
+    model = models.User
+    template_name = "users/update-profile.html"
+    fields = (
+        "first_name",
+        "last_name",
+        "stutus",
+        "avatar",
+    )
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 def log_out(request):
     logout(request)
@@ -50,6 +60,7 @@ def log_out(request):
 
 
 def complete_verification(request, key):
+    # 유저 이메일 확인 메시지
     try:
         user = models.User.objects.get(email_secret=key)
         user.email_verified = True

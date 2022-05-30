@@ -3,7 +3,11 @@
 
 <nav class="vertical-menu-wrapper closed-menu">
   <div class="vertical-menu-logo">
-    <div>LOGO</div>
+    {% if user.is_verified %}
+      <div><a href="{{user.get_absolute_url}}">{{user.last_name}}</a></div>
+    {% else %}
+      <div>IOSTAR</div>
+    {% endif %}
     <span class="open-menu-btn"><hr><hr><hr></span>
   </div>
   <ul class="vertical-menu">
@@ -29,7 +33,7 @@
     <li>요리, 베이킹, 커피</li>
     <li>반려동물</li>
     <hr/>
-    <li id="user-info">MJ<span>online</span></li>
+    <!--<li id="user-info">MJ<span>online</span></li>-->
   </ul>
 </nav>
 

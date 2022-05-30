@@ -61,7 +61,8 @@ class PromotionDetailView(DetailView):
         form = CommentForm()
         post = get_object_or_404(models.Post, pk=pk)
         # post = get_object_or_404(models.Post, pk=pk, slug=slug)
-        comments = post.comment_set.all()
+        #comments = post.comment_set.all()
+        comments = post.comment_set.order_by('created')
 
         context['post'] = post
         context['comments'] = comments
@@ -105,7 +106,6 @@ class NoticeView(ListView):
     queryset = promotionBand[0].posts.order_by('created')
     context_object_name = "posts"
     template_name="posts/promotions/masonry_list.html"
-
 
 class UploadAdView(FormView):
     """ upload advertisements form """
