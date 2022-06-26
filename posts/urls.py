@@ -16,12 +16,14 @@ urlpatterns = [
     path("promotions/uploads/", views.UploadAdView.as_view(), name="promotion_uploads"),
     path("<int:pk>/delete/", views.post_delete, name="post_delete"),
     path("<int:pk>/edit/", views.EditPostView.as_view(), name="edit"),
-    path("search/", views.SearchView.as_view(), name="search"),
+    path("search/", views.search, name="search"),
     path("hobby/", views.HobbyHome.as_view(), name= "hobby"),
     path("life/", views.SchoolLife.as_view(), name="school"),
     path("career/", views.CareerHome.as_view(), name="career"),
     path("notice/", views.NoticeView.as_view(), name="iostar-notice"),
+    path("notice/uploads/", views.NoticeView.as_view(), name="iostar-notice"),
     path("notice/<int:pk>", views.NoticeDetailView.as_view(), name="notice_detail"),
+    path("uploads/", views.UploadAdView.as_view(), name="upload"),
 ]
 
 def protected_file(request, path, document_root=None):

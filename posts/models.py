@@ -2,6 +2,7 @@ from django.db import models
 from core import models as core_models
 from django.urls import reverse
 from ckeditor.fields import RichTextFormField, RichTextField
+from django.core.paginator import Paginator
 from ckeditor_uploader.fields import RichTextUploadingField
 from django_ckeditor_5.fields import CKEditor5Field
 from django.conf import settings

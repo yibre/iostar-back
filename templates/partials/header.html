@@ -1,18 +1,23 @@
 {% load static %}
+{% load custom_tags %}
 <link rel="stylesheet" href = "{% static 'css/header.css' %}">
 <header class="header-options">
     <div class = "header-searchbar">
     {% block search-bar %}
-        <form method="get" action="{% url 'posts:search' %}" class="w-9/12">
-            <input clasㄷs="search-box" name="city" placeholder="Search" />
+        <form method="get" action="{% url 'posts:search' %}" method="GET" class="w-9/12" value="{{request.GET.q}}">
+            <input class="search-box" name="q" value="{{request.GET.q}}" type="text" placeholder="Search" />
         </form>
     {% endblock search-bar %}
     </div>
     <div class = "header-logo"><a href="{% url 'core:home' %}"><img class="logo-picture" src= "{% static '/images/iostar_vertical.png' %}"></a></div>
     <section class = "header-menu">
         <ul>
+        {% if "/posts/" in request.path %}
+            <!-- <li class="header-button header-logout"><a href="{{ request.get_full_path }}uploads"> 글쓰기 </li> -->
+            <li class="header-button header-logout"><a href="{{request.get_full_path|url_editor}}">글쓰기</li>
+        {% endif %}
         {% if user.is_authenticated %}
-            <li class= "header-button header-logout"><a href="{% url 'users:logout' %}">Log out</a></li>
+            <li class= "header-button header-logout"><a href="{% url 'users:logout' %}">Log Out</a></li>
         {% else %}
             <div class="header-authentificated">
                 <li class = "header-button header-login"><a href= "{% url 'users:login' %}">Login</a></li>

@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.views.generic import ListView, DetailView, UpdateView, FormView, View
 from comments.forms import CommentForm
 from django.urls import reverse_lazy
+from django.db.models import Q
 
 # Promotions
 
@@ -16,6 +17,9 @@ class PromotionListView(ListView):
     promotionBand = Band.objects.filter(name="promotions")
     queryset = promotionBand[0].posts.order_by('created')
     context_object_name = "posts"
+    paginate_by = 12
+    paginate_orphans = 5
+    ordering = "created"
     template_name="posts/promotions/main.html"
 
 def count_views(request, post_id):
@@ -154,3 +158,16 @@ class CareerHome(ListView):
 class SearchView(View):
     """ SearchView Definition """
     pass
+
+def search(request):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+        submitbutton= request.GET.get('submit')
+
+        if query is not None:
+            lookups= Q(title__icontains=query) | Q(content__icontains=query)
+            results = models.Post.objects.filter(lookups).distinct()
+            context={'results': results,
+                     'submitbutton': submitbutton}
+            return render(request, "posts/promotions/search.html", context)
+    return render(request, "posts/promotions/search.html")

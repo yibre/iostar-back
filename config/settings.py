@@ -50,6 +50,8 @@ THIRD_PARTY_APPS = ["django_seed",]
 CKEDITOR_UPLOAD_PATH = 'uploads/featured_image/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+CKEDITOR_RESTRICT_BY_USER = True
+
 
 
 PROJECT_APPS = [

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block page_name %}
+    {{request.GET.q}} 에 대한 검색 결과
+{% endblock page_name %}
+{% block content %}
+{% load static %}
+{% if request %}
+    {{request.GET.q}} 에 대한 검색 결과
+{% endif %}
+
+{% if results %}
+    {% for post in results %}
+    <div class="m-auto w-2/3 bg-blue-50">
+        <a href= "{% url 'posts:promotion_detail' post.pk %}">
+            <p>poster title: {{post.title}}</p>
+            <p> {{post.author}}</p>
+            <p>poster content: {{post.content|safe}}</p>
+        </a>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="">
+    포스트가 없습니다
+    </div>
+{% endif %}
+
+{% endblock %}

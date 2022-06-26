@@ -1,0 +1,8 @@
+{% load custom_tags %}
+<div class="mt-5 bg-white p-2.5">
+    <a href= "{% url 'posts:promotion_detail' post.pk %}">
+        <div class="text-lg">{{post.title}}</div>
+        <div class="text-sm text-gray-400">{{post.author.nickname}}</div>
+        <div class="text-base">{{post.content|getonlytext|removelinebreaks:100|safe}}</div>
+    </a>
+</div>
