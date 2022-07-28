@@ -199,6 +199,11 @@ EMAIL_USE_SSL = True
 EMAIL_FROM = "master@iostar.site"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'width': '100%', 
+    },
+}
 
 # CKeditor5 custom option setting
 customColorPalette = [

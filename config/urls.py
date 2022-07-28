@@ -24,6 +24,16 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from ckeditor_uploader import views as ckeditor_views
 
+#url 패턴
+from django.views.static import serve
+from django.conf.urls import url
+
+# 404 페이지 및 500 페이지 세팅
+from posts.views import customHandler404
+
+handler404 = customHandler404.as_view()
+handler500 = 'posts.views.handler500'
+
 urlpatterns = [
     path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
@@ -37,7 +47,7 @@ urlpatterns = [
     path('iostream/', include("iostream.urls", namespace = "iostream")),
     path('admin/', admin.site.urls),
     path('comments/', include("comments.urls", namespace="comments")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

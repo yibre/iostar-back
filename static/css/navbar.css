@@ -1,6 +1,11 @@
-body {margin: 0; background: #181824; font-family: Arial; }
+body {
+  margin: 0;
+  font-family: Arial;
+  width: 100%;
+  background: #181824;
+}
+
 nav {
-  position: fixed;
   width: 100%;
   max-width: 240px;
   bottom: 0; top: 0;
@@ -12,8 +17,12 @@ nav {
   transition: all 300ms;
   -moz-transition: all 300ms;
   -webkit-transition: all 300ms;
-  z-index: 10;
 }
+
+.vertical-menu-wrapper {
+  position: fixed;
+}
+
 nav .vertical-menu {
   overflow-x: hidden;
   overflow-y: scroll;
@@ -25,18 +34,22 @@ nav .vertical-menu-logo .open-menu-btn{width: 30px; height: max-content; positio
 nav .vertical-menu-logo .open-menu-btn hr{margin: 5px 0}
 nav li{list-style: none; padding: 10px 10px; cursor: pointer;}
 nav li:hover{ color: rgba(75, 105, 176,1); }
-nav li#user-info{position: absolute; bottom: 0; width: 80%; background-color: #181824;}
-nav li#user-info > span{display: block; float: right; font-size: 0.9em; position: relative; opacity: 0.6;}
+nav li#user-info{position: fixed; bottom: 0; width: 80%; background-color: #181824;}
+nav li#user-info > span{display: block; float: right; font-size: 0.9em; position: fixed; opacity: 0.6;}
 nav li#user-info > span:after{
   content: '';
   width: 12px;
   height: 12px;
   display: block;
-  position: absolute;
+  position: fixed;
   background: green;
   left: -20px; top: 0; bottom: 0;
   margin: auto;
   border-radius: 50%;
+}
+
+nav li:last-child{
+  color:antiquewhite;
 }
 
 .closed-menu .content-wrapper{
@@ -45,13 +58,13 @@ nav li#user-info > span:after{
 }
 
 .content-wrapper{
-  width: calc(100% - 240px);
+  position:absolute;
+  /* width: calc(100% - 240px); */
+  width: 100%;
   height: 100%;
-  position: fixed;
   background: #fff;
   left: 240px;
   padding: 20px;
-  z-index: 0;
 }
 
 .content-wrapper{
@@ -75,4 +88,35 @@ nav li#user-info > span:after{
   min-height: 100%;
   border-radius: 20px;
   padding: 10px;
+}
+
+
+.vertical-menu:last-child {
+  padding-bottom: 30px;
+}
+
+.vertical-title {
+  overflow: hidden;
+  text-align: center;
+}
+
+.vertical-title:before,
+.vertical-title:after {
+  background-color: #FFF;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.vertical-title:before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.vertical-title:after {
+  left: 0.5em;
+  margin-right: -50%;
 }

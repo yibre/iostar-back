@@ -10,6 +10,10 @@ from django.views.generic import ListView, DetailView, UpdateView, FormView, Vie
 from comments.forms import CommentForm
 from django.urls import reverse_lazy
 from django.db.models import Q
+from ckeditor.widgets import CKEditorWidget
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django_ckeditor_5.widgets import CKEditor5Widget
+
 
 # Promotions
 
@@ -60,8 +64,6 @@ class PromotionDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs["pk"]
-        # slug = self.kwargs["slug"]
-
         form = CommentForm()
         post = get_object_or_404(models.Post, pk=pk)
         # post = get_object_or_404(models.Post, pk=pk, slug=slug)
@@ -99,17 +101,95 @@ class PromotionDetailView(DetailView):
         return redirect(reverse("posts:promotion_detail", kwargs={"pk": post.pk}))
 
 
-class NoticeDetailView(DetailView):
+class UploadView(FormView):
     """ Detail Definitions """
+    form_class = forms.UploadPostForm
+    template_name = "posts/promotions/upload_promotions.html"
+    # 내가 저장한 포스터가 promotion band에 저장되도록 만들어야함
+
+    def get_context_data(self, **kwargs):
+        context = super(UploadView, self).get_context_data(**kwargs)
+        band_title = self.kwargs['band_title']
+        return context
+
+    def form_valid(self, form):
+        post = form.save()
+        post.author = self.request.user
+        band = self.kwargs['band_title']
+        try:
+            band = Band.objects.get(name=band)
+            print("band title is", band)
+            post.band = band
+            post.save()
+            form.save_m2m()
+            messages.success(self.request, "Advertisement Uploads")
+            return redirect(reverse("posts:post_detail", kwargs={"band_title":band, "pk": post.pk}))
+        except:
+            return redirect('https://iostar.site/404')
+
+
+class PostDetailView(DetailView):
     model = models.Post
     template_name="posts/promotions/promotion_detail.html"
 
-class NoticeView(ListView):
+    # 이 하단부 코드는
+    # https://dontrepeatyourself.org/post/django-blog-tutorial-part-4-posts-and-comments/
+    # 현재 코멘트 업로드 안되는 상황, 물론 잘 보여지긴 함
+    # 에서 가져옴
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        band_title = self.kwargs["band_title"]
+        band = get_object_or_404(Band, name=band_title)
+        # BUG 1: 이 부분에 버그 있음. 가령 testband에 작성된 44번째 글 대신 promotions/44를 입력할 시 그대로 가게 됨
+        pk = self.kwargs["pk"]
+        form = CommentForm()
+        post = get_object_or_404(models.Post, pk=pk)
+        """
+        하단은 BUG 1 이 수정되지 않은 코드임
+        if post.band.name == band_title:
+            return redirect('https://iostar.site/404')
+        """
+        comments = post.comment_set.order_by('created')
+        context['post'] = post
+        context['comments'] = comments
+        context['form'] = form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+        self.object = self.get_object()
+        context = super().get_context_data(**kwargs)
+        band_title= self.kwargs["band_title"]
+        post = models.Post.objects.filter(id=self.kwargs['pk'])[0]
+        comment = post.comment_set.all()
+
+        context['post'] = post
+        context['comment'] = comment
+        context['form'] = form
+
+        if form.is_valid():
+            print("form is valid")
+            writer = self.request.user
+            comment = form.cleaned_data['comment']
+            comment = Comment.objects.create(
+                comment=comment, post=post, writer = writer
+            )
+            form = CommentForm()
+            context['form'] = form
+        # 해당 줄 부분 수정이 있음
+        return redirect(reverse("posts:post_detail", kwargs={"band_title":band_title, "pk": post.pk}))
+
+
+class PostMainView(ListView):
+    context_object_name = "posts"
+    template_name="posts/promotions/masonry_list.html"
+
+class NoticeView(PostMainView):
     """ iostar notice """
     promotionBand = Band.objects.filter(name="promotions")
     queryset = promotionBand[0].posts.order_by('created')
-    context_object_name = "posts"
-    template_name="posts/promotions/masonry_list.html"
+
 
 class UploadAdView(FormView):
     """ upload advertisements form """
@@ -130,11 +210,7 @@ class UploadAdView(FormView):
 class EditPostView(UpdateView):
     model = models.Post
     template_name = "posts/post_edit.html"
-    fields = {
-        "title",
-        "contents",
-        "file"
-    }
+    form_class = forms.EditPostForm
 
     def get_object(self, querset=None):
         post = super().get_object(queryset=querset)
@@ -171,3 +247,14 @@ def search(request):
                      'submitbutton': submitbutton}
             return render(request, "posts/promotions/search.html", context)
     return render(request, "posts/promotions/search.html")
+
+# 404 페이지 보여주기 https://pythonblog.co.kr/blog/67/ 출처
+class customHandler404(View):   
+    def get(self, request, *args, **kwargs):        
+        return render(request, "errors/404.html")
+
+def handler500(request):
+    response = render(request, "errors/500.html")
+    response.status_code = 500
+    return response
+    

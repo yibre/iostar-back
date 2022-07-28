@@ -22,8 +22,9 @@ urlpatterns = [
     path("career/", views.CareerHome.as_view(), name="career"),
     path("notice/", views.NoticeView.as_view(), name="iostar-notice"),
     path("notice/uploads/", views.NoticeView.as_view(), name="iostar-notice"),
-    path("notice/<int:pk>", views.NoticeDetailView.as_view(), name="notice_detail"),
-    path("uploads/", views.UploadAdView.as_view(), name="upload"),
+    path("notice/<int:pk>", views.PromotionDetailView.as_view(), name="notice_detail"),
+    path("<str:band_title>/uploads/", views.UploadView.as_view(), name="post_upload"),
+    path("<str:band_title>/<int:pk>", views.PostDetailView.as_view(), name="post_detail"),
 ]
 
 def protected_file(request, path, document_root=None):

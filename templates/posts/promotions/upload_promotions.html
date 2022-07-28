@@ -6,15 +6,12 @@
 
 {% block content %}
 {% load static %}
-hi there
-<div class="overflow-y-visible overflow-x-visible w-5/6 m-auto bg-lime-100 h-full">
+<div class="overflow-y-visible overflow-x-visible w-2/3 m-auto bg-lime-100 h-5/6">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         {{ form.media }}
-        <button class = "w-1/3 bg-lime-100">
-            {{cta}} upload
-        </button>
+        {% include "partials/button.html" with cta="업로드" %}
     </form>
 </div>
 {% endblock content %}
