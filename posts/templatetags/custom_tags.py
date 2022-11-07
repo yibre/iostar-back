@@ -1,5 +1,5 @@
 from django import template
-
+from users.models import User
 from django.template.defaultfilters import stringfilter
 import re
 from django.utils.text import Truncator
@@ -54,3 +54,28 @@ def url_editor(text):
     else:
         tail_part = tail_part_raw # *** 뒤에 /가 존재하지 않을 경우(***) 아무것도 수행하지 않음
     return head_part + tail_part + "/uploads"
+
+
+@register.filter(is_safe=True)
+@stringfilter
+def redirect_shoolpost(text):
+    """ 유저의 school을 읽어서 이 페이지로 보내주는 링크 """
+    school = kwargs['profile']
+    # 유저의 school을 읽어서 이 페이지로 보내줌
+    request.user
+    return text.find()
+
+"""
+def my_tag(a, b, *args, **kwargs):
+    warning = kwargs['warning']
+    profile = kwargs['profile']
+    ...
+    return ...
+"""
+
+
+@register.filter(is_safe=True)
+@stringfilter
+def shoolpost_go_uploadpage(text):
+    text.find()
+    return text.find()

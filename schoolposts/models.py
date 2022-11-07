@@ -7,23 +7,27 @@ from django.template.defaultfilters import slugify
 
 # 출처: https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
 
-class Post(models.Model):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)
-    body = models.CharField(max_length=400)
-  
-def get_image_filename(instance, filename):
-    title = instance.post.title
-    slug = slugify(title)
-    return "post_images/%s-%s" % (slug, filename)  
+class SchoolPost(post_models.Post):
+    SCHOOL_DGIST = "dgist"
+    SCHOOL_KAIST = "kaist"
+    SCHOOL_UNIST = "unist"
+    SCHOOL_GIST = "gist"
+    SCHOOL_POSTECH = "postech"
+    SCHOOL_OTHERS = "others"
 
+    SCHOOL_CHOICES = (
+        (SCHOOL_DGIST, "DGIST"),
+        (SCHOOL_KAIST, "KAIST"),
+        (SCHOOL_UNIST, "UNIST"),
+        (SCHOOL_GIST, "GIST"),
+        (SCHOOL_POSTECH, "POSTECH"),
+        (SCHOOL_OTHERS, "OTHER")
+    )
+    School = models.CharField(
+        choices = SCHOOL_CHOICES, null=True, blank=True, default="", max_length=20,
+    )
 
-class Images(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
-    image = models.ImageField(upload_to=get_image_filename,
-                              verbose_name='Image')
-
-class KaistPost(post_models.Post):
+class KaistPost(SchoolPost):
     # members = user_models.objects.get(school="KAIST")
     pass
 

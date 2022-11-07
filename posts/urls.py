@@ -25,6 +25,7 @@ urlpatterns = [
     path("notice/<int:pk>", views.PromotionDetailView.as_view(), name="notice_detail"),
     path("<str:band_title>/uploads/", views.UploadView.as_view(), name="post_upload"),
     path("<str:band_title>/<int:pk>", views.PostDetailView.as_view(), name="post_detail"),
+    path("<str:band_title>", views.PostListView.as_view(), name="post_lists"),
 ]
 
 def protected_file(request, path, document_root=None):

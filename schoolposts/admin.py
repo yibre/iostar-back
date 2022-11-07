@@ -5,15 +5,7 @@ from . import models
 
 # Register your models here.
 
-@admin.register(models.Post)
-class PostAdmin(admin.ModelAdmin):
+@admin.register(models.SchoolPost)
+class SchoolPostAdmin(admin.ModelAdmin):
     """post admin definition"""
-
-    list_display = ('user', 'title',)
-    search_fields = ('title',)
-
-@admin.register(models.Images)
-class ImagesAdmin(admin.ModelAdmin):
-    """image admin definition"""
-
-    list_display = ('post',)
+    list_display = ('band', 'author',)

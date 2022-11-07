@@ -118,7 +118,6 @@ class UploadView(FormView):
         band = self.kwargs['band_title']
         try:
             band = Band.objects.get(name=band)
-            print("band title is", band)
             post.band = band
             post.save()
             form.save_m2m()
@@ -190,6 +189,18 @@ class NoticeView(PostMainView):
     promotionBand = Band.objects.filter(name="promotions")
     queryset = promotionBand[0].posts.order_by('created')
 
+class PostListView(ListView):
+    "A라는 밴드에 들어가면 그 밴드에 해당하는 포스트들을 보여줌"
+    # BUG 2: http://iostar.site/posts/junkcolumn 에서 정크컬럼 테스트 메시지에 들어가면 promotion/47로 연결됨
+    template_name="posts/promotions/main.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        band = Band.objects.filter(name=self.kwargs['band_title'])
+        queryset = band[0].posts.order_by('created')
+        print(queryset)
+        return queryset
+    
 
 class UploadAdView(FormView):
     """ upload advertisements form """

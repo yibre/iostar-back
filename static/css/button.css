@@ -1,0 +1,22 @@
+.option_buttons {
+    float: right;
+    text-align: center;
+    border-radius: 25px;
+    color: #A94CAF;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-color: #A94CAF;
+    border-width: 1px;
+    font-size: smaller;
+    background-color: white;
+    margin-top: 1rem;
+}
+
+.position-left {
+    float: right;
+}
+
+.position-balance-right{
+    
+}
